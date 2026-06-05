@@ -1,5 +1,5 @@
 """
-Structured logging for Ariadne using structlog.
+Structured logging for Thena using structlog.
 
 Every log line is a JSON object. session_id and step_id are injected
 automatically into every log call via contextvars — the orchestrator
@@ -12,26 +12,26 @@ with json_output=False for human-readable colored terminal output.
 Usage:
 
     # In main.py, once at startup:
-    from ariadne.core.logger import configure_logging
+    from thena.core.logger import configure_logging
     configure_logging(json_output=True, log_level="INFO")
 
     # In the orchestrator, at session start:
-    from ariadne.core.logger import bind_session
+    from thena.core.logger import bind_session
     bind_session(session_id=session.plan.session_id)
 
     # Before each step:
-    from ariadne.core.logger import bind_step
+    from thena.core.logger import bind_step
     bind_step(step_id=step.id)
 
     # In any module:
-    from ariadne.core.logger import get_logger
+    from thena.core.logger import get_logger
     log = get_logger(__name__)
     log.info("tool_called", tool_name="search.web", query="enterprise churn")
 
     # Output (JSON):
     # {"event": "tool_called", "tool_name": "search.web", "query": "enterprise churn",
     #  "session_id": "abc123", "step_id": "def456", "level": "info",
-    #  "logger": "ariadne.tools.web_search", "timestamp": "2025-01-15T14:23:01Z"}
+    #  "logger": "thena.tools.web_search", "timestamp": "2025-01-15T14:23:01Z"}
 """
 
 from __future__ import annotations

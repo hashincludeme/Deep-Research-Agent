@@ -1,4 +1,4 @@
-# Ariadne — Deep Research Agent
+# Thena — Deep Research Agent
 
 A production-grade autonomous research agent that takes a natural language query, decomposes it into a structured research plan, searches the web, scrapes sources, evaluates findings, and synthesizes a cited report — with full crash recovery via checkpointing.
 
@@ -10,7 +10,7 @@ A production-grade autonomous research agent that takes a natural language query
 python main.py "What are the main drivers of enterprise SaaS churn?"
 ```
 
-Ariadne will:
+Thena will:
 1. Decompose the query into 4–7 specific sub-questions
 2. Search the web for each sub-question (via Tavily)
 3. Scrape and clean content from the top sources
@@ -23,7 +23,7 @@ Ariadne will:
 ## Project Structure
 
 ```
-ariadne/
+thena/
 ├── main.py                      # CLI entry point
 ├── config.py                    # All settings from environment variables
 │
@@ -83,7 +83,7 @@ All other layers are orchestrator-unaware and independently testable.
 
 ### Plan-and-Execute (not ReAct)
 
-Ariadne first decomposes the query into a `ResearchPlan` before searching anything. This gives the agent:
+Thena first decomposes the query into a `ResearchPlan` before searching anything. This gives the agent:
 - A definition of "done" (all questions answered or skipped)
 - Loop prevention (tracks what's been covered)
 - Adaptive planning (new sub-questions can be added mid-research)
@@ -154,7 +154,7 @@ python main.py --list-sessions
 ### Sample terminal output
 
 ```
-Ariadne — Deep Research Agent
+Thena — Deep Research Agent
 ============================================================
 Query : What are the main causes of enterprise SaaS churn?
 Model : claude-sonnet-4-6
@@ -196,7 +196,7 @@ python -m pytest tests/ -v
 
 ---
 
-## Extending Ariadne
+## Extending Thena
 
 **Add a new tool:** Define a function in `tools/`, register it in `tools/registry.py`, call it via `get_tool("name")` in the orchestrator.
 

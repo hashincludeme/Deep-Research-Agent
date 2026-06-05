@@ -1,7 +1,7 @@
 """
 Async retry decorator with exponential backoff and full jitter.
 
-Only retries AriadneError subclasses where retryable=True. Non-retryable
+Only retries ThenaError subclasses where retryable=True. Non-retryable
 errors (BudgetError, PlanError, SourceNotFoundError on 404) propagate
 immediately — no delay, no retry attempt.
 
@@ -23,7 +23,7 @@ import functools
 import random
 from typing import Callable, TypeVar
 
-from .errors import AriadneError, RateLimitError
+from .errors import ThenaError, RateLimitError
 
 F = TypeVar("F", bound=Callable)
 
@@ -32,7 +32,7 @@ def retry(
     max_retries: int = 3,
     base_delay: float = 1.0,
     max_delay: float = 60.0,
-    exceptions: tuple[type[AriadneError], ...] = (AriadneError,),
+    exceptions: tuple[type[ThenaError], ...] = (ThenaError,),
 ) -> Callable[[F], F]:
     """
     Async retry decorator with full jitter exponential backoff.
@@ -51,14 +51,14 @@ def retry(
         Upper bound on the jitter cap regardless of attempt number.
         Without this, delays would grow unboundedly for large max_retries.
     exceptions:
-        Tuple of AriadneError subclasses to catch and retry.
-        Defaults to (AriadneError,) — any retryable AriadneError.
+        Tuple of ThenaError subclasses to catch and retry.
+        Defaults to (ThenaError,) — any retryable ThenaError.
         Restrict to specific types when you only want to retry certain
         failure modes: @retry(exceptions=(RateLimitError, ToolError))
 
     Non-retryable errors:
-        Any AriadneError with retryable=False is re-raised immediately,
-        even on the first attempt. Any non-AriadneError exception
+        Any ThenaError with retryable=False is re-raised immediately,
+        even on the first attempt. Any non-ThenaError exception
         propagates without being caught at all.
 
     RateLimitError special case:
@@ -81,7 +81,7 @@ def retry(
     def decorator(func: F) -> F:
         @functools.wraps(func)
         async def wrapper(*args, **kwargs):
-            last_exc: AriadneError | None = None
+            last_exc: ThenaError | None = None
 
             for attempt in range(max_retries + 1):
                 try:

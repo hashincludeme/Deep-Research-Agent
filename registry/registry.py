@@ -1,5 +1,5 @@
 """
-Tool registry for Ariadne.
+Tool registry for Thena.
 
 Tools register themselves on import via the @tool decorator. The orchestrator
 never hardcodes which tools exist — it calls to_anthropic_tools() to get the

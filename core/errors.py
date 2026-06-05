@@ -1,12 +1,12 @@
 """
-Structured error hierarchy for Ariadne.
+Structured error hierarchy for Thena.
 
 Every exception carries typed context — tool name, step ID, endpoint, etc. —
 and a `retryable` flag the @retry decorator uses to decide whether to wait
 and try again or escalate immediately.
 
 Design rule: raise the most specific subclass you can, always with context.
-Catching `AriadneError` at the orchestrator boundary gives you structured
+Catching `ThenaError` at the orchestrator boundary gives you structured
 context for logging and routing without needing to parse error strings.
 """
 
@@ -15,9 +15,9 @@ from __future__ import annotations
 from typing import Optional
 
 
-class AriadneError(Exception):
+class ThenaError(Exception):
     """
-    Base class for all Ariadne errors.
+    Base class for all Thena errors.
 
     The `retryable` flag is the contract between an error and the @retry
     decorator. True means the failure is transient (network glitch, rate limit)
@@ -34,7 +34,7 @@ class AriadneError(Exception):
         return f"{type(self).__name__}(message={self.message!r}, retryable={self.retryable})"
 
 
-class ToolError(AriadneError):
+class ToolError(ThenaError):
     """
     A registered tool failed during execution.
 
@@ -63,7 +63,7 @@ class ToolError(AriadneError):
         )
 
 
-class SubagentError(AriadneError):
+class SubagentError(ThenaError):
     """
     A sub-agent invocation failed.
 
@@ -91,7 +91,7 @@ class SubagentError(AriadneError):
         )
 
 
-class PlanError(AriadneError):
+class PlanError(ThenaError):
     """
     The research plan is invalid, corrupt, or cannot be advanced.
 
@@ -118,7 +118,7 @@ class PlanError(AriadneError):
         )
 
 
-class BudgetError(AriadneError):
+class BudgetError(ThenaError):
     """
     The session has exceeded its token or cost budget.
 
@@ -146,7 +146,7 @@ class BudgetError(AriadneError):
         )
 
 
-class RateLimitError(AriadneError):
+class RateLimitError(ThenaError):
     """
     An API endpoint returned a rate limit response (HTTP 429 or equivalent).
 
@@ -174,7 +174,7 @@ class RateLimitError(AriadneError):
         )
 
 
-class SourceNotFoundError(AriadneError):
+class SourceNotFoundError(ThenaError):
     """
     A URL or document source could not be retrieved.
 

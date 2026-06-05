@@ -13,7 +13,7 @@ other coroutines aren't blocked during the wait, then re-acquires after
 waking up to do the final consume.
 
 Pre-configured instances at the bottom of this module match the actual
-rate limits of the APIs Ariadne uses. Import and call `await limiter.acquire()`
+rate limits of the APIs Thena uses. Import and call `await limiter.acquire()`
 before any outbound API request.
 """
 
@@ -134,7 +134,7 @@ class TokenBucketRateLimiter:
 #
 # Module-level singletons. Usage:
 #
-#   from ariadne.core.rate_limiter import ANTHROPIC_LIMITER
+#   from thena.core.rate_limiter import ANTHROPIC_LIMITER
 #   await ANTHROPIC_LIMITER.acquire()
 #   response = await client.messages.create(...)
 #
@@ -148,7 +148,7 @@ class TokenBucketRateLimiter:
 #   Conservative default: rate=0.5/s, capacity=5.
 #
 # Override for higher tiers:
-#   import ariadne.core.rate_limiter as rl
+#   import thena.core.rate_limiter as rl
 #   rl.ANTHROPIC_LIMITER = TokenBucketRateLimiter(rate=5.0, capacity=20, name="anthropic")
 
 ANTHROPIC_LIMITER: TokenBucketRateLimiter = TokenBucketRateLimiter(

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ariadne — Deep Research Agent
+Thena — Deep Research Agent
 
 Usage:
   python main.py "your research query"
@@ -15,7 +15,7 @@ from pathlib import Path
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Ariadne: Production-grade deep research agent",
+        description="Thena: Production-grade deep research agent",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
@@ -52,7 +52,7 @@ def main():
     from agent.orchestrator import ResearchOrchestrator
 
     query = args.query or "(resuming)"
-    print(f"\nAriadne — Deep Research Agent")
+    print(f"\nThena — Deep Research Agent")
     print(f"{'=' * 60}")
     print(f"Query : {query}")
     print(f"Model : {config.LLM_MODEL}")

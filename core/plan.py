@@ -1,7 +1,7 @@
 """
-ariadne/core/plan.py
+thena/core/plan.py
 
-ResearchPlan: the authoritative state object for one Ariadne research session.
+ResearchPlan: the authoritative state object for one Thena research session.
 
 Lives outside conversation history so it:
 - Survives context window limits (injected into system prompt, never truncated)
@@ -355,7 +355,7 @@ class Contradiction(BaseModel):
 @dataclasses.dataclass(frozen=True)
 class ResearchPlan:
     """
-    Authoritative, immutable state object for one Ariadne research session.
+    Authoritative, immutable state object for one Thena research session.
 
     FROZEN — why:
       State transitions are explicit. Every change produces a NEW ResearchPlan
